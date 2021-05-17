@@ -153,3 +153,39 @@ The first step is to install the required packages from the project manifest. Th
 ```bash
 npm install
 ```
+
+**Super important:** This course I am taking is on Bootstrapp4. It is not the latest release, but it'll have to do for now. Eventually, the concepts are the same and it will be a matter of learning the updated API.
+
+To install Bootstrap and its dependencies, run the following command
+
+```bash
+npm install jquery@3.3.1 popper.js@1.12.9 bootstrap@4.0.0 --save
+```
+
+After this, to enable bootstrap on the website, it is necessary to provide the following instructions in ```index.html```, inside the head
+
+```html
+<!-- Required metatags always comes first -->
+<meta charset="utf-8">
+<!-- For responsive design -->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<!-- Link stylesheet Bootstrap CSS -->
+<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+```
+
+Always keep in mind that the path of the Bootstrap style file is ```node_modules/bootstrap/dist/css/bootstrap.min.css``` for this particular version.
+
+Bootstrap has also JS templates and classes that can be use if needed. This also have to be included on ```index.html```. However, the good practice is to do that at the bottom of the file. This yields more effcient redering and creates a better user experience. This has to be done right before the end of the body:
+
+```html
+<!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+<script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+<script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+```
+
+It is very important that the scripts be included in the above order, since Bootstrap depends on JQuery and pooper.js.
+
+After saving the changes, it can be seen that Bootstrap styling is loaded. The font changes from Times New Roman to Helvetica Neue. And the fontsize is adjusted depending on the type of text (heading, paragraph, etc.).
