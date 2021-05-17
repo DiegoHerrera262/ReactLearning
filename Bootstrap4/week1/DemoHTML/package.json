@@ -1,0 +1,24 @@
+{
+  "name": "demohtml",
+  "version": "1.0.0",
+  "description": "This is a toy example for setting up light-server",
+  "main": "index.html",
+  "scripts": {
+    "start": "npm run lite",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lite": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiegoHerrera262/ReactLearning.git"
+  },
+  "author": "Diego Alejandro Herrera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DiegoHerrera262/ReactLearning/issues"
+  },
+  "homepage": "https://github.com/DiegoHerrera262/ReactLearning#readme",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
