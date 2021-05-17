@@ -88,6 +88,9 @@ node -v
 
 **Note:** Current environment version of NodeJS can be accessed using ```nvm list```.
 
+**data:** 17/05/21
+**topic:** NodeJS and Bootstrap4
+
 ### Setting Up a Web App Project
 
 The first step is to specify all packages and dependencies on a ```package.json``` file. This has at least three advantages:
@@ -128,3 +131,19 @@ That way, I can serve my website locally using the command
 npm start
 ```
 
+**Super Important:** Avoid committing all changes in your repo. In particualr, the directory ```node_modules``` should be excluded by putting it's name on a ```.gitignore```.
+
+## Introduction to Bootstrap4
+
+Bootstrap is a Front-End Web UI Framework, that integrates with a web app set up with NodeJS.
+
+> In general, a **Front-End Web UI Framework** is a collection of templates for UI elements, such as buttons, tables, menus, typography, etc.
+
+Some of the best reasons for using a framework of this type are:
+
+1. They allow **responsive design**. That is, the website will look good even on movile devices.
+1. They solve **cross-compatibility** between browsers (for most cases).
+1. They increase **productivity** since provide HTLM and CSS templates for DOMs.
+1. They tend to have a **large community support**.
+
+The most popular front-end UI framework is Bootstrap. It is bases on HTML, CSS and JS.
