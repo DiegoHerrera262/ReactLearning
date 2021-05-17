@@ -146,4 +146,10 @@ Some of the best reasons for using a framework of this type are:
 1. They increase **productivity** since provide HTLM and CSS templates for DOMs.
 1. They tend to have a **large community support**.
 
-The most popular front-end UI framework is Bootstrap. It is bases on HTML, CSS and JS.
+The most popular front-end UI framework is Bootstrap. It is bases on HTML, CSS and JS. The course I'm taking provided a starter page that corresponds to some restaurant. I downladed it to get started with Bootstrap.
+
+The first step is to install the required packages from the project manifest. This is done by running
+
+```bash
+npm install
+```
