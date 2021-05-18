@@ -43,7 +43,7 @@ There are single page apps that are implemented using **React** or **Angular**, 
 
 In the beginning, JavaScript was designed to enhance interaction with users of a web application, and thus was constrained to a web browser. However, **NodeJS** changed this fundamentally. This tool is built upon Chrome V8 Engine for JavaScript, and allows execution of JS programs in a desktop environment.
 
-> NodeJS allows development of UI logic, and even design, as well as Bussines logic and more back-end development, with JavaScript.
+> NodeJS allows development of UI logic, and even design, as well as business logic and more back-end development, with JavaScript.
 
 JavaScript is an **event-driven programming language**. This means that the logic of a program execution depends on the occurence of a given event, for examp`le, some user interaction. I have already encountered this fact when considering input from stdin. 
 
@@ -255,4 +255,11 @@ It is quite important to remember that Bootstrap always makes use of 12 columns 
 
 **Super important:** Rows can be nested! This is awesome, for then more flexibility can be obtained in the design.
 
+> Most of the documentation can be found readily at the [official website](https://getbootstrap.com/docs/4.0/layout/grid/). Here, CSS classes for styling, as well as the classes for the grid system can be consulted.
+
+### Custom CSS Classes and Bootdstrap
+
+It is possible to extend Bootstrap classes and define new classes on stylesheets by just including it on the ehad of ```index.html```. There is no problem at all.
+
+> A concise guide of CSS class properties can be found [here](https://www.tutorialrepublic.com/css-reference/css3-properties.php).
 
