@@ -189,3 +189,70 @@ Bootstrap has also JS templates and classes that can be use if needed. This also
 It is very important that the scripts be included in the above order, since Bootstrap depends on JQuery and pooper.js.
 
 After saving the changes, it can be seen that Bootstrap styling is loaded. The font changes from Times New Roman to Helvetica Neue. And the fontsize is adjusted depending on the type of text (heading, paragraph, etc.).
+
+### Responsive and Bootstrap Grid
+
+Nowadays, most users view a webpage's content from a wide variety of devices: from smartphones and tablets, to desktops with different screen outputs. As a result, a web designer must take the approach that a web page's content must adapt to the screen limitations of the user device. To do this, two paradigms have emerged in web design: **responsive** and **mobile-first** design.
+
+Responsive design means that the styling classes adapt to screen constraints automatically. This can be done by using some UI Frameworks, or by hand. Mobile-first means that the designer considers the smallest available screen for an user, proposes a content layout, and then extends the design to emcompass larger screens.
+
+> Bootstrap is a responsive design mobile-first front-end UI framework.
+
+Responsive design has three elements (at least):
+
+1. **Grid Systems**
+1. **Fluid images**
+1. **Media Queries**
+
+The former is a common CSS tool. They can be performed by the sintax:
+
+```css
+@media(min-width: someValInPixels){
+    /*
+    Define styling of
+    different classes.
+    */
+}
+```
+
+Grid system and fluid images are managed by frameworks like Bootstrap. The grid system is based upon **rows and columns**. The class **container** defines the canvas in which everything is to be layed out. Now, inside this class, rows can be stacked, which contain 12 columns by default.
+
+> Bootstrap is responsive and mobile-first. Thus it automatically redistributes content according to media queries that leverage CSS Flexibox.
+
+The main container adapts according to three types of screens:
+
+|Screen Size | Pixels | Class
+|:-:|:-:|:-:|
+| Extra small | (<576px) | ```.col-*``` |
+| Small | (≥576px) | ```.col-sm-*``` |
+| Medium | (≥768px) | ```.col-md-*``` |
+| Large | (≥992px) | ```.col-lg-*``` |
+| Extra large | (≥1200px) | ```.col-xl-*```  |
+
+I understand that the convention is to stack everything on top for extra small screens, and then actually using the columns if the widh allows it. To specify the threshold size for which the layout uses Bootstrap columns, one must specify the class of the columns acording to de convention specified in the list above.
+
+**Important:** The asterisk may be substituted by the number of columns that the division is supposed to take.
+
+There are several classes and subclasses that specify the type of alignment of the columns, both vertical and horizontal, as well as automatic sizing w.r.t. content. A sample layout can be:
+
+```html
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <p>Hello world</p>
+        </div>
+        <div class="col-sm">
+            <p>Hello world</p>
+        </div>
+        <div class="col-sm">
+            <p>Hello world</p>
+        </div>
+    </div>
+</div>
+```
+
+It is quite important to remember that Bootstrap always makes use of 12 columns by default. If the screen size changes, what is readjusted is the size of the columns. Furthermore, rows have a size that is consistent with the largest content inside its divisions.
+
+**Super important:** Rows can be nested! This is awesome, for then more flexibility can be obtained in the design.
+
+
