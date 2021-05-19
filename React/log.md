@@ -310,3 +310,45 @@ Now I think it's good to process the snipet above.
 1. After, a class method `MyMethod`, that changes the state of an instance is defined. Notice that any change to the state is carried out using the method `setState`. If the state is changed directly, a warning message pops out.
 
 1. The triggering event in this example is clicking on a button. What the JSX instruction above says, is that upon clicking, the app should esecute `MyMethod`, and change the state of the component.
+
+**Pro Tip:** If the component has several methods, list them on an array called `METHODS`, and iterate over the array to bind `this` as follows
+
+```js
+METHODS.forEach((method) => {
+  this[method] = this[method].bind(this);
+});
+```
+
+Remember to put that snippet inside the `construct` method of the component.
+
+#### Property Initializers for Class Components
+
+If instead of common class functions, arrow functions are used to set the events, _no this binding is needed_. This is a property of arrow functions that is related to the fact that they inherit `this` from the class component. To profit this, the following snippet can be used
+
+```jsx
+class MyComponent extends React.Components {
+    // Define state outside
+    // the render method
+    state = {
+        someProp = 'someValue'
+    }
+    // Define arrow func
+    // for handling event
+    MyMethod = () => {
+        this.setState({
+            someProp = 'NewValue'
+        });
+    }
+    // Use render as
+    // above
+    render(){
+        return (
+            // Some JSX
+            <button onClick={this.myMethod}></button>
+            // More JSX
+        );
+    }
+}
+```
+
+These are called _property initializers_, and work because React has already incorpored Babel for JS compatibility. However, to this date, this is not the offcial standard, although it is a community standard.

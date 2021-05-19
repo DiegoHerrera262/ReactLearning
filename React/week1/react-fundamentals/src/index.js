@@ -2,32 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class SomeClassComponent extends React.Component {
-  constructor(){
-    super();
-    // Definition of methods list
-    const METHODS = [
-      'addToCart',
-      'removeFromCart'
-    ];
-    // Bind this inside
-    // methods
-    METHODS.forEach((method) => {
-      this[method] = this[method].bind(this);
-    });
-    // Definition of an instance
-    // inicial state
-    this.state = {
-      numberToCart : 0
-    };
+  // No construct is used
+  state = {
+    numberToCart : 0
   }
   // Definition of desired
   // methods
-  addToCart(){
+  addToCart = () => {
     this.setState({
       numberToCart : this.state.numberToCart + 1
     });
   }
-  removeFromCart(){
+  removeFromCart = () => {
     this.setState({
       numberToCart : this.state.numberToCart - 1
     });
