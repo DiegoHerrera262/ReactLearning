@@ -223,3 +223,48 @@ const MyComponent = (props) => {
     );
 }
 ```
+
+### React components with classes
+
+When declaring components using classes, I am extending a React class called `React.Components`. Inside this extension, I define a _render_ method that contains the sturcture of the component. Props are not accessed from this render method, but rather from `this` object. For instance:
+
+```jsx
+class SomeClassComponent extends React.Component {
+  render() {
+    return (
+      <div>
+        <div>
+          <h1>Hey! Hello, {this.props.name}</h1>
+        </div>
+        <div>This is simple</div>
+      </div>
+    );
+  }
+}
+```
+
+Has almost identical properties as the functional component declared above.
+
+> However, class components have internal properties that can be modified through interaction in the app. **They can modify and update their own state**.
+
+To define a state for a class component, a _construtor method_ should be used as follows
+
+```jsx
+class SomeClassComponent extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            // Include properties mapkey
+        }
+    }
+    render() {
+        return (
+      // Some JSX Expression
+        );
+    }
+}
+```
+
+Properties of an instance state can be modified inside the _render_ method of the class.
+
+**Super Important:** It is not advisable to modify the state of a class component instance using arrow functions! However, in one of my commits, I did this following my Udemy course.

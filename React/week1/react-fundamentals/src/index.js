@@ -1,24 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function SomeComponent(props){
-  return(
-    <div>
+class SomeClassComponent extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      numberToCart : 0
+    };
+  }
+  render(){
+    return(
       <div>
-        <h1>Hey! Hello, {props.name}</h1>
+        <div>
+          <h1>Product: {this.props.name}</h1>
+        </div>
+        <div>
+          Click to add to cart!
+        </div>
+        <button
+          onClick={
+            () => {
+              this.setState({
+                numberToCart : this.state.numberToCart + 1
+              });
+            }
+          }
+        >
+          {this.state.numberToCart}
+        </button>
       </div>
-      <div>
-        This is simple
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 function App(){
   return(
     <div>
-      <SomeComponent name="Carlos"/>
-      <SomeComponent name="David" />
+      <SomeClassComponent name="Kiwi"/>
+      <SomeClassComponent name="Banana" />
     </div>
   );
 }
