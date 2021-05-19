@@ -352,3 +352,29 @@ class MyComponent extends React.Components {
 ```
 
 These are called _property initializers_, and work because React has already incorpored Babel for JS compatibility. However, to this date, this is not the offcial standard, although it is a community standard.
+
+## Refactorization of React Components
+
+When working with large apps, the good practice is to separate Rect components from the main one `App`, and from the main page generator `index`, into separate files. To do this, all components that are included on `App`, should be located on JS files inside a directory called `./components`. Since they use JSX, the header should always include
+
+```js
+import React from "react";
+```
+
+At the end, to be able to use it in the `App`, they must be exported using the command
+
+```js
+export default SomeComponent;
+```
+
+Finally, in the `App`, located at `./App.js`, all components should be included using the line
+
+```js
+import SomeComponent from "./components/SomeComponent";
+```
+
+Of course, on the `index.js`, that renders the main page, the line
+
+```js
+import App from "./App";
+```
