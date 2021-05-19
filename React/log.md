@@ -214,4 +214,12 @@ In this example, I control the props, pretty much like on standard HTML. This se
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
-**Super Important:** A component props property must be included _inside curly brackets_, except if they are strings.
+**Super Important:** A component props property must be included _inside curly brackets_, except if they are strings. On ECMAScript 6, it is possible to declare _arrow functions_ for instantiating React components:
+
+```jsx
+const MyComponent = (props) => {
+    return(
+        // A JSX expresion
+    );
+}
+```
