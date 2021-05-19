@@ -92,19 +92,19 @@ The core of the web app is the App file. This has a particular syntaxis that is 
 Behind scenes, JSX expressions are transpiled using Babel, to React elements by means of the funtion `React.createElement(type,props,content)`. For instance, consider a simple JSX expression declaring a header
 
 ```jsx
-let myHeader = <h1> Hello World! </h1>;
+let MyHeader = <h1> Hello World! </h1>;
 ```
 
 This is transpiled to
 
 ```js
-let myHeader = React.createElement("h1", null, "Hello World!");
+let MyHeader = React.createElement("h1", null, "Hello World!");
 ```
 
 Now, elements can be nested. For example
 
 ```jsx
-let mySection = (
+let MySection = (
   <section>
     <myHeader />
   </section>
@@ -114,7 +114,7 @@ let mySection = (
 would be transpiled to
 
 ```js
-let mySection = React.createElement(
+let MySection = React.createElement(
   "section",
   null,
   React.createElement("myHeader", null)
@@ -140,3 +140,78 @@ Now, starting the development server only produces a warning that _App_ is not u
 ```js
 const root = document.getElementById("root");
 ```
+
+Then, to effectively load the App to the DOM, `react-dom` is used as follows:
+
+```js
+import ReactDOM from "react-dom";
+ReactDOM.render(App, root);
+```
+
+With this, a simple app is displayed upon serving with `npm start`.
+
+It may also be noted that JS expresions can be displayed on the webpage by using curly brackets. For instance, I can create an object
+
+```js
+let user = {
+  name: "Sara",
+  age: 25,
+  country: "Argentina",
+};
+```
+
+And then retrieve its properties to the UI in my site
+
+```js
+const App = <h1>Hello {user.name}!</h1>;
+```
+
+I can even define a function
+
+```js
+function retrieveUser(someUser) {
+  return `Hello ${someUser.name}, from ${user.country}, you are ${user.age} years old.`;
+}
+```
+
+And show its output on my app. This is quite awesome!
+
+**Super Important:** All React elements must have names that start with capital letters.
+
+### React Components v React Elements
+
+Elements are JSX expressions that are _static_, that is to say, they cannot be changed. In contrast, **components** can be adapted depending on the situation, by controlling their props (_properties_) object. **Functional React components** are defined as functions that return a particula JSX construction. For instance:
+
+```jsx
+function SomeComponent(props) {
+  return (
+    <div>
+      <div>
+        <h1>Hey! Hello, {props.name}</h1>
+      </div>
+      <div>This is simple</div>
+    </div>
+  );
+}
+```
+
+This component can be reused later, and customized by changing its properties (if at some point they are defined). As an example, consider the following App element to be rendered
+
+```jsx
+function App() {
+  return (
+    <div>
+      <SomeComponent name="Carlos" />
+      <SomeComponent name="David" />
+    </div>
+  );
+}
+```
+
+In this example, I control the props, pretty much like on standard HTML. This seems really cool. The actual render of the App element is set by
+
+```jsx
+ReactDOM.render(<App />, document.getElementById("root"));
+```
+
+**Super Important:** A component props property must be included _inside curly brackets_, except if they are strings.

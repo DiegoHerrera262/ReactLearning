@@ -1,12 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// Define a simple App
-const App = <h1>Hello World!</h1>;
+function SomeComponent(props){
+  return(
+    <div>
+      <div>
+        <h1>Hey! Hello, {props.name}</h1>
+      </div>
+      <div>
+        This is simple
+      </div>
+    </div>
+  );
+}
 
-// Load root element in index.html
-const root = document.getElementById('root');
+function App(){
+  return(
+    <div>
+      <SomeComponent name="Carlos"/>
+      <SomeComponent name="David" />
+    </div>
+  );
+}
 
 // Load App to DOM
-ReactDOM.render(App, root);
+ReactDOM.render(
+  <App />, 
+  document.getElementById('root')
+);
 
