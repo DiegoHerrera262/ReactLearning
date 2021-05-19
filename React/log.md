@@ -268,3 +268,45 @@ class SomeClassComponent extends React.Component {
 Properties of an instance state can be modified inside the _render_ method of the class.
 
 **Super Important:** It is not advisable to modify the state of a class component instance using arrow functions! However, in one of my commits, I did this following my Udemy course.
+
+#### Using Class Methods for Managing Events
+
+It is not advisable to use arrow functions since this can couse some overhead in the page rendering, every time the state of a component changes, it will be rendered again. The best practice is to manage events using class functions, since then they will only be rendered once in the constructor, and only modified properties will be updated. Consider as an example trying to change some property of a React component by clicking a button. The good practice for doing this would be using _class methods_ as follows
+
+```jsx
+class MyComponent extends React.Component {
+  constructor() {
+    super();
+    // bind this to my method
+    this.myMethod = this.Mymethod.bind(this);
+    // Create class state
+    this.state = {
+      someProp: "Some Value",
+    };
+  }
+  // Definition of method to
+  // modify somProp
+  myMethod() {
+    this.setState({
+      someProm: "Some New Value",
+    });
+  }
+  render() {
+    return (
+      // Some JSX
+      <button onClick={this.myMethod}></button>
+      // More JSX
+    );
+  }
+}
+```
+
+Now I think it's good to process the snipet above.
+
+1. First, inside the constructor, the object `this` is bound from the class method `myMethod` to the component itself. It seems like inside some class methods, the objetc `this` points to the function rather than to the component (looks like `render` is not one of them).
+
+1. Then, the property to be changed is added to the `state`, as an object.
+
+1. After, a class method `MyMethod`, that changes the state of an instance is defined. Notice that any change to the state is carried out using the method `setState`. If the state is changed directly, a warning message pops out.
+
+1. The triggering event in this example is clicking on a button. What the JSX instruction above says, is that upon clicking, the app should esecute `MyMethod`, and change the state of the component.
