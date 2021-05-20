@@ -469,3 +469,13 @@ const myCssClass = `${mystyle["class1"]} ${mystyle["class2"]}`;
 ```
 
 What is going to happen is that a name for the class with a unique suffix will be created and used in the actual rendering of the page.
+
+#### Modularization of React Projects
+
+Once a project gros, the current file structuer is unmantainable. The best practice is to group an individual component's files inside their own folder with the component name. To ease the import process to the main app, an `index.html` containing the _single_ line of code
+
+```js
+export { default } from "./ComponentName";
+```
+
+Would do the trick, due to the way pacagke imporst work on ECMAScript 6. Remember to always put the JS and the styles file inside the component's folder
