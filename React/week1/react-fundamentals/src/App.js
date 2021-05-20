@@ -1,11 +1,12 @@
 import React from 'react';
-import SomeClassComponent from './components/SomeClassComponent';
+import ProductCard from './components/ProductCard';
 
 function App(){
   return(
     <div>
-      <SomeClassComponent name="Kiwi"/>
-      <SomeClassComponent name="Banana" />
+      <ProductCard name="Kiwi" price="500"/>
+      <ProductCard name="Banana" price="200"/>
+      <ProductCard name="Apple" price="700"/>
     </div>
   );
 }

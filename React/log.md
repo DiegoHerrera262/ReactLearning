@@ -378,3 +378,94 @@ Of course, on the `index.js`, that renders the main page, the line
 ```js
 import App from "./App";
 ```
+
+## A Bit More on JSX
+
+JSX is _sugar sintax_ that hels writing clearer code for developing React apps. The translation to plain JS is caried out by **Babel**. The traduction is carried out by the React function
+
+```js
+React.createElement("HTMLmark", props, otherPropsObjec);
+```
+
+And what is used as a component in plain JS is a _wrapper_ function with the same name of the desired component. If an element is created, the direct output of the function above is stored. Consider, for example, the translation of the functional component `SomeComponent`:
+
+```js
+"use strict";
+
+function SomeComponent(props) {
+  return /*#__PURE__*/ React.createElement(
+    "div",
+    null,
+    /*#__PURE__*/ React.createElement(
+      "div",
+      null,
+      /*#__PURE__*/ React.createElement("h1", null, "Hey! Hello, ", props.name)
+    ),
+    /*#__PURE__*/ React.createElement("div", null, "This is simple")
+  );
+}
+```
+
+Notice that a component has **nested elements**, which are created with the React function presented. Also, unspecified properties are passed as `null`; whenever a property is specified, it is passed as an object `{propname : propval}`.
+
+**Super Important:** Components should always be declared with initial capital letter. Otherwise, Babel will interpret its appearance as a string.
+
+It is possible to **group** related React components in an objetc, and defining them as arrow functions as follows
+
+```jsx
+const Components = {
+  Comp1: () => {
+    // some JSX
+  },
+  Comp2: () => {
+    // some JSX
+  },
+};
+```
+
+And access them in another component using the notation `<Components.Comp1 />` or `<Components.Comp2 />`.
+
+**date:** 20/05/21
+**topic:** Styling React components
+
+## Styling React Components
+
+Stiles are best managed using **CSS classes** and styling files. The way this can be done is by importing styling files as follows
+
+```jsx
+import "./path/to/mystyle.css";
+```
+
+This is valid thanks to **webpack**. In a React class element, styling can be added using an _injector_ (curly brackets):
+
+```jsx
+render(){
+  return(
+    <element className={myclass} />
+  );
+}
+```
+
+Notice that since `class` is a reserved JS word, `className` should be used instead with React. This is pretty useful for **conditional styling**. For example, it could be so that
+
+```jsx
+myclass = "BaseClass" + (someCondition ? "ActiveClass" : "");
+```
+
+The thing in the parenthesis is called _ternary conditional_. Although this is quite standard, in large projects, there is a high risk that programmers repeat the name of a CSS class styling. To solve this, it is possible to use **CSS Modules**. This are CSS sintax files named as `mystyle.module.css`. They can be imported on a JS file as objects:
+
+```jsx
+import mystyle from "./path/to/mystyle.module.css";
+```
+
+To access a styling class from a module, use the syntax `mystyle['mycssclass']`.
+
+> The point of this definition is simply to avoid the problem of redifining a CSS style class twice on a large project. Setting style on program logic works the same as before
+
+**Pro Tip:** To combine classes from a module, use _template strings_. For instance:
+
+```jsx
+const myCssClass = `${mystyle["class1"]} ${mystyle["class2"]}`;
+```
+
+What is going to happen is that a name for the class with a unique suffix will be created and used in the actual rendering of the page.
