@@ -1,12 +1,27 @@
 import React from 'react';
-import ProductCard from './components/ProductCard/ProductCard';
+import ProductCard from './components/ProductCard';
+
+const kiwiProps = {
+  name : 'Kiwi',
+  price : '500'
+}
+
+const BananaProps = {
+  name : 'Banana',
+  price : '300'
+}
+
+const AppleProps = {
+  name : 'Apple',
+  price : '700'
+}
 
 function App(){
   return(
     <div>
-      <ProductCard name="Kiwi" price="500"/>
-      <ProductCard name="Banana" price="200"/>
-      <ProductCard name="Apple" price="700"/>
+      <ProductCard {...kiwiProps} />
+      <ProductCard {...BananaProps} />
+      <ProductCard {...AppleProps} />
     </div>
   );
 }

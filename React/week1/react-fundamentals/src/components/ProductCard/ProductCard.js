@@ -4,45 +4,71 @@ import cardStyle from './ProductCard.module.css';
 class ProductCard extends React.Component {
   // No construct is used
   state = {
-    numberToCart : 0
+    shopDetails : {
+      numberToCart : 0,
+      isFavorite : false
+    }
   }
   // Definition of desired
   // methods
+  markFavorite = () => {
+    this.setState((prevState) => ({
+      shopDetails : {
+        ...prevState.shopDetails,
+        isFavorite : ! prevState.shopDetails.isFavorite
+      }
+    }));
+  }
   addToCart = () => {
-    this.setState({
-      numberToCart : this.state.numberToCart + 1
-    });
+    this.setState((prevState) => ({
+      shopDetails : {
+        ...prevState.shopDetails,
+        numberToCart : prevState.shopDetails.numberToCart + 1
+      }
+    }));
   }
   removeFromCart = () => {
-    this.setState({
-      numberToCart : this.state.numberToCart - 1
-    });
+    this.setState((prevState) => ({
+      shopDetails : {
+        ...prevState.shopDetails,
+      numberToCart : prevState.shopDetails.numberToCart > 0 ? prevState.shopDetails.numberToCart - 1 : 0
+      }
+    }));
   }
   resetUnits = () =>{
-    this.setState({
-      numberToCart : 0
-    })
+    this.setState((prevState) => ({
+      shopDetails : {
+        ...prevState.shopDetails,
+        numberToCart : 0
+      }
+    }));
   }
   render(){
-    const activeClass = this.state.numberToCart > 0 ? cardStyle['card-active'] : '';
-    const compClass = cardStyle.card + ' ' + activeClass; 
+    const activeClass = this.state.shopDetails.numberToCart > 0 ? cardStyle['card-active'] : '';
+    const compClass = cardStyle.card + ' ' + activeClass;
+    const HeaderStyle = {
+      color : this.state.shopDetails.isFavorite ? 'red' : ''
+    };
     return(
       <div className={compClass}>
         <div>
-          <h1>{this.props.name}</h1>
+          <h1 style={HeaderStyle}>{this.props.name}</h1>
         </div>
         <div>
           <p>Price per unit: {this.props.price}</p>
-          <p>In cart: {this.state.numberToCart}</p>
-          <p><b>Total cost:</b> $ {this.props.price * this.state.numberToCart}</p>
+          <p>In cart: {this.state.shopDetails.numberToCart}</p>
+          <p><b>Total cost:</b> $ {this.props.price * this.state.shopDetails.numberToCart}</p>
         </div>
         <div>
           <button onClick={this.addToCart}>+</button>
-          {this.state.numberToCart}
+          {this.state.shopDetails.numberToCart}
           <button onClick={this.removeFromCart}>-</button>
         </div>
         <div>
           <button onClick={this.resetUnits}>Reset</button>
+        </div>
+        <div>
+          <button onClick={this.markFavorite}>mark as Favorite</button>
         </div>
       </div>
     );
