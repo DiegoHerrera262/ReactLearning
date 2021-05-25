@@ -604,3 +604,147 @@ myCompMethod = () => {
 ```
 
 This is quite useful for code maintenance, and is far more clear, in my opinion.
+
+## Events in React
+
+It is possible to mutate states of a React component using events. This can be done as before, by defining a control method, but event properties can be passed to the function as arguments. Consider, for instance, the following example of using an input HTML object for changing the state of an app component:
+
+```jsx
+<input onChange={this.markFavorite} />
+```
+
+With a method `this.markFavorite`, that is defined as
+
+```jsx
+markFavorite = (event) => {
+  this.setState((prevState) => {
+    if (event.target.value === "Yes") {
+      return {
+        shopDetails: {
+          ...prevState.shopDetails,
+          isFavorite: true,
+        },
+      };
+    }
+    return {
+      shopDetails: {
+        ...prevState.shopDetails,
+        isFavorite: false,
+      },
+    };
+  });
+};
+```
+
+Notice that the argument for the control function is the **event**. One of the properties for the `onChange` event is `onChange.target.value`, which allows to capture the text on the input box. In this way, the control function allows changing the nested property `isFavorite`.
+
+**Important:** React provides an interface between _native events_, which have different properties depending on the browser used to render the app, using _synthetic events_ that standardize those properties.
+
+**Pro Tip:** React rewrites an event once is happens, and the asynchronous nature of `this.setState` implies that storing data from event properties is best done by **caching first** the desired data, and then using `this.setState`.
+
+**date:** 25/05/21
+**topic:** More on props
+
+## Introduction to `props.children`
+
+Sometimes, there are situations when some content needs to be passed from a parent component to a child component. This is the case, for instance, of a _container component_, that sets some styling and inside which some actual content will be read or displayed. Consider, for instance, the following _person card_ component:
+
+```jsx
+class TestComponent extends React.Component {
+  state = {
+    color: "blue",
+  };
+
+  render() {
+    return (
+      <div style={this.state}>
+        <div> This is {this.props.name} </div>
+        <div> My color is {this.state.color}</div>
+        <div>{this.props.children}</div>
+      </div>
+    );
+  }
+}
+```
+
+In this class, the idea is to include some description of the person that an instantiated component doesn't know before hand. In our app, the description will be passed as follows:
+
+```jsx
+App = (props) => {
+  return (
+    <div>
+      <TestComponent name="Carlitos">
+        <p> I'm Colombian and love football! </p>
+      </TestComponent>
+    </div>
+  );
+};
+```
+
+The children props, which in this case is a simple paragraph with text, are passed to the parent `TestComponent` object. Notice that the property `this.children.props` allows **composition**, and substitutes inheritance in React.
+
+## Extract properties from objects ES6
+
+Consider the task of extracting some property values inside som JS object. This can be done using _dot notation_. However, in some instances, it is better to de-structure the object. For instance:
+
+```jsx
+myObject = {
+  name: "Diego",
+  social: {
+    instagram: "diegoherrera262",
+    facebook: "diegoherrera262",
+    github: "diegoherrera262",
+  },
+};
+```
+
+If I want to get the name of `myObject`, I would only need to use the following syntax:
+
+```jsx
+let { name } = myObject;
+```
+
+In that case, a variable named `name` would store the value `'Diego'`. It is possible to _nest_ de-structures using the following syntax:
+
+```jsx
+let {
+  name,
+  social: { instagram, github },
+} = myObject;
+```
+
+In that example, three variables are created, that store the corresponding properties of `myObject`.
+
+**Pro Tip:** The names of the variables can be changed using _colon_ as follows:
+
+```jsx
+let { name: nombre } = myObject;
+```
+
+In this case, a variable named `nombre`, with value `'Diego'` is created.
+
+> This tool may be useful to make code clearer. For instance, `this.props` can be _de-structured_ so as to avoid long lines of code.
+
+### `React.Fragments`
+
+In some instances, it happens that a React component must consist of different HTML nodes. However, by default, a React component only has one node.
+
+> It is possible to use fragments for returning a component with what is effectively a multiplicity of nodes.
+
+The usage of this component is as follows:
+
+```jsx
+const App = () => {
+  return (
+    <React.Fragment>
+      <AnotherComp {...someProps} />
+      <AnotherComp {...someProps} />
+      <AnotherComp {...someProps} />
+    </React.Fragment>
+  );
+};
+```
+
+When transpiling to HTML, the node associated to fragment is effectively gone, as in it doesn't appear in the built files.
+
+**Pro Tip:** Another way to create a fragment component is to use empty marks `<>Some content</>`. But this requires the last version of Babel.

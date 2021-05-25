@@ -11,13 +11,23 @@ class ProductCard extends React.Component {
   }
   // Definition of desired
   // methods
-  markFavorite = () => {
-    this.setState((prevState) => ({
-      shopDetails : {
-        ...prevState.shopDetails,
-        isFavorite : ! prevState.shopDetails.isFavorite
+  markFavorite = (event) => {
+    this.setState((prevState) => {
+      if (event.target.value === 'Yes'){
+        return {
+          shopDetails : {
+            ...prevState.shopDetails,
+            isFavorite : true
+          }
+        }
       }
-    }));
+      return {
+        shopDetails : {
+          ...prevState.shopDetails,
+          isFavorite : false
+        }
+      }
+    });
   }
   addToCart = () => {
     this.setState((prevState) => ({
@@ -68,7 +78,10 @@ class ProductCard extends React.Component {
           <button onClick={this.resetUnits}>Reset</button>
         </div>
         <div>
-          <button onClick={this.markFavorite}>mark as Favorite</button>
+          <div>
+            Do you want to add to favorites?
+          </div>
+          <input onChange={this.markFavorite}/>
         </div>
       </div>
     );
