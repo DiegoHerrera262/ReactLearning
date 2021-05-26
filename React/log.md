@@ -748,3 +748,95 @@ const App = () => {
 When transpiling to HTML, the node associated to fragment is effectively gone, as in it doesn't appear in the built files.
 
 **Pro Tip:** Another way to create a fragment component is to use empty marks `<>Some content</>`. But this requires the last version of Babel.
+
+## Managing Prop Types in React
+
+In general, some operations must be performed inside a React app that change the properties of the components. Some, like arithmetic operation, are **type sensitive**. It is impossible to divide two strings! As a result, some controls must be present in order to avoid having the app crash.
+
+> The package `prop-types` presents de possibility to check if the props passed to a React component are of the correct type for internal operation.
+
+To use this package, it must be installed using ``npm```:
+
+```bash
+npm install prop-types --save
+```
+
+**Important:** The flag should be included so that `package.json` is updated for production.
+
+It can be included on a component file as
+
+```jsx
+import PropTypes from "prop-types";
+```
+
+The property `propTypes` of a class component _is static_. It can be set using syntax
+
+```jsx
+class MyComponent extends React.Component {
+  state = {
+    // Some properties
+  }
+
+  static propTypes = {
+    propString : PropTypes.string,
+    propNumber : PropTypes.number,
+    propBool : PropTypes.bool
+  }
+
+  myMethod = () => {
+    // Some logic
+  }
+  render(){
+    return (
+      // Some jsx
+    );
+  }
+}
+```
+
+It is also possible to set default props for a React component pretty much in the same way as setting propTypes:
+
+```jsx
+static defaultProps = {
+  propString : 'Default String',
+  propNumber : 1111,
+  propBool : true
+}
+```
+
+**Super Important:** When working with functional components, `propTypes` and `defaultProps`should be set outside the function declaration, and using dot notation.
+
+## Iterating over lists in React
+
+A very cool tool is the method `array.map`, which takes a function as input. A function that produces a **React element** can be used to produce iteratively a sequence of elements whose props (or a subset of props) are contained inside an array. Consider the following demo
+
+```jsx
+const People = [
+  {id:111, name: 'Diego'},
+  {id:222, name: 'Daniela'},
+  {id:333, name: 'Sara'},
+  {id:444, name: 'Carlos'}
+]
+
+const MyApp = () => {
+  return (
+    <>
+    {
+      people.map((person) => {
+        return (
+          <SomeComponent key={person.id} name={person}>
+        );
+      })
+    }
+    </>
+  );
+}
+```
+
+It is possible to access second level properties, for instance if the array contains objects, and iterate over lists properties using `array.map` too.
+
+> In order to iterate over object properties, the method `Object.keys(myObject)` can be generated to produce an array of the property keys. Then, the list can be used to access object properties iteratively using `array.map`.
+
+Notice the `key` prop in the **main node** of the element generating function. This is quite important, for it allows React to efficiently update the state of the components of the app. Not using this prop will cause a special warning that can be seen in the console.
+
+> The best practice is to set up a prop key that comes from an unique id that identifies the elements of the list. And include it in the iteration, rather than the class definition.

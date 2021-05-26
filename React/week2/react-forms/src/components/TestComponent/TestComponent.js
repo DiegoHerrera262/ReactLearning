@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 class TestComponent extends React.Component {
 
     static propTypes = {
-        name : PropTypes.string,
+        name : PropTypes.string.isRequired,
+    }
+
+    static defaultProps = {
+        name : 'Albert',
     }
 
     state = {
