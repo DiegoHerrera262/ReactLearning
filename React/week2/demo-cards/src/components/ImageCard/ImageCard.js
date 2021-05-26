@@ -2,15 +2,34 @@ import React from 'react';
 import imageCard from './ImageCard.module.css';
 
 class ImageCard extends React.Component {
+    state = {
+        isSelected : false
+    }
+
+    // Select-unselect by clicking
+    selectImage = () => {
+        this.setState((prevState) => ({
+            ...prevState,
+            isSelected : ! prevState.isSelected
+        }));        
+    }
+
     render() {
 
         // de-structure props (see images on App.js)
         const {author, source, views} = this.props.cardData;
+        // de-structure state
+        const {isSelected} = this.state
         // set global style from module
-        const globalCardStyle = `${imageCard['card']} ${imageCard['images']}`;
+        let globalCardStyle = `${imageCard['card']}`;
+        let selectedStyle = isSelected ? `${imageCard['card-selected']}` : `${imageCard['card-unselected']}`
+        globalCardStyle += ' ' + String(`${imageCard['images']} `) + selectedStyle
+
         return (
 
-            <div className={globalCardStyle}>
+            <div 
+            className={globalCardStyle}
+            onClick={this.selectImage}>
                 <div>
                     <img 
                     className={imageCard['image']} 

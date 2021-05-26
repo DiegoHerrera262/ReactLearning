@@ -840,3 +840,11 @@ It is possible to access second level properties, for instance if the array cont
 Notice the `key` prop in the **main node** of the element generating function. This is quite important, for it allows React to efficiently update the state of the components of the app. Not using this prop will cause a special warning that can be seen in the console.
 
 > The best practice is to set up a prop key that comes from an unique id that identifies the elements of the list. And include it in the iteration, rather than the class definition.
+
+It is also possible to pass data to the state of a component in an iterative component instantiation. Due to the way life cycles work in React, this cant be done by passing an array element to the callback function of an event listener. The right way to do it is to **bind the callback** to `this`, and the argument as follows
+
+```jsx
+<MyComponent onEvent={this.callback.bind(this, arrayElement)} />
+```
+
+A cool example that illustrates how to do this can be found on `/week2/demo-cards`. Here, I used an external div element to capture information inside the iteration, while the main components have a listener that change the state of an image card upon clicking.

@@ -1,5 +1,6 @@
 import React from 'react';
-import ImageCard from './components/ImageCard';
+import ImageCard from './components/ImageCard/index';
+import ListSelected from './components/ListSelected/index';
 
 const images = [
   {
@@ -41,16 +42,32 @@ const images = [
 ];
 
 class App extends React.Component {
+  state = {
+    selectedImage : images[0]
+  }
+  select = (image) => {
+    this.setState((prevState) => ({
+      selectedImage : image
+    }));
+  }
   render(){
+    const {selectedImage} = this.state;
     return(
       <div>
-        {
-          images.map((image) => {
-            return (
-              <ImageCard key={image.id} cardData={image}/>
-            );
-          })
-        }
+        <div>
+            <ListSelected image={selectedImage}/>
+        </div>
+        <div>
+          {
+            images.map((image) => {
+              return (
+                <div key={image.id} onClick={this.select.bind(this,image)}>
+                  <ImageCard key={image.id} cardData={image}/>
+                </div>
+              );
+            })
+          }
+        </div>
       </div>
     );
   }

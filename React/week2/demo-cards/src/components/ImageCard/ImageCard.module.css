@@ -1,10 +1,18 @@
 .card {
   padding: 1em;
-  border: 1px solid #e1e1e1;
-  background-color: #fff;
   margin: 1em 0;
   border-radius: 0.2em;
   box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.17);
+}
+
+.card-unselected {
+  border: 1px solid #e1e1e1;
+  background-color: #fff;
+}
+
+.card-selected {
+  border: 1px solid #b1fbcf;
+  background-color: #cbf2d8;
 }
 
 .author-info {
