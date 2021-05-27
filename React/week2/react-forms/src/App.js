@@ -1,35 +1,25 @@
 import React from 'react';
-import TestComponent from './components/TestComponent';
-
-// Array over which several
-// test comps will be created
-const People = [
-  {id:111, name: 'Diego'},
-  {id:222, name: 'Daniela'},
-  {id:333, name: 'Sara'},
-  {id:444, name: 'Carlos'}
-]
-
-// Function that maps elements
-// of the array to an element
-const mapToComp = (person) => {
-  return (
-    <div key={person.id}>
-      <TestComponent name={person.name}>
-        <p>I am inside an array</p>
-      </TestComponent>
-    </div>
-  );
-}
-
-
+import NonControlledInput from './components/NonControlledInput';
 
 class App extends React.Component {
+  // Callback from custom event handler
+  send = (childData) => {
+    const {name, email} = childData;
+    console.log('Retrieve info from parent')
+    console.log(name)
+    console.log(email)
+  }
+
   render () {
     return (
-      <React.Fragment>
-        {People.map(mapToComp)}
-      </React.Fragment>
+      <div>
+        <div>
+          <h1>Ref form</h1>
+        </div>
+        <div>
+          <NonControlledInput onEnteredData={this.send}/>
+        </div>
+      </div>
     )
   }
 }

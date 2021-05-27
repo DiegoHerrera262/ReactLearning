@@ -848,3 +848,128 @@ It is also possible to pass data to the state of a component in an iterative com
 ```
 
 A cool example that illustrates how to do this can be found on `/week2/demo-cards`. Here, I used an external div element to capture information inside the iteration, while the main components have a listener that change the state of an image card upon clicking.
+
+**date:** 26/05/21
+**topic:** Refs and forms in React
+
+## Using Refs in React
+
+A ref allows us to point directly to a particular DOM element in our app. Remember that React creates what is called a _virtual DOM_, and thus direct control of a real element of our web app is only possible through refs.
+
+> The DOM element to which a ref points must receive an special prop called `ref`. This prop might be initialized by a class property
+
+The current standard for doing that is the following
+
+```jsx
+class MyComponent extends React.Component {
+  pointer = React.createRef()
+
+  render () {
+    return (
+      <AnotherComponent ref={this.pointer}>
+    );
+  }
+}
+```
+
+Now, it is possible to directly modify the **real DOM element** by a class method. It is only necessary to call it as `this.pointer`. The special class method `componentDidMount` can be used to execute some function when the component is rendered.
+
+> One of the most important applications of this tool is to incorporate third party libraries in an app.
+
+As an example of this integration, I will use the package Chart.js for creating beautiful plots in HTML5. To install this package and include it in the build dependencies, run the code
+
+```bash
+npm install chart.js --save
+```
+
+The package makes use of a `canvas` element that has a particular identifier. It is identified using `React.getElementByID`, and the context is extracted for chart rendering. The recommended procedure is to create a ref to the `canvas` object, and use it to get the context.
+
+**Super Important:** With the current version of React I'm using, the way to include Chart.js is to use `react-chartjs-2`. This can be installed like Chart.js. I still don't know how to constraint the image size, but eventually, I will learn.
+
+When working with functional components, a reference to the **real DOM** element that the React component represents can be sent using `React.forwardRef`, as follows:
+
+```jsx
+const MyFuncComponent = React.forwardRef((props, ref) => (
+  <SomeComponent>
+    <MyRefComponent ref={ref} />
+  </SomeComponent>
+));
+```
+
+In this way, a reference created in some component with `React.createRef` can be send to some child component. This can be useful when nesting components, and one child needs to access properties of the real DOM.
+
+**date:** 27/05/21
+**topic:** Managing forms in React
+
+## Managing Forms with Refs
+
+Remember that refs allows pointing to real DOM components, and thus accessing their properties. In tha case of forms, one utility of refs is capturing data using input elements with a _submit_ button. To read the value on an input box, a ref must be created as seen before, and an event handler on a button must be included that captures the data from the real DOM element. For instance:
+
+```jsx
+class RefForm extends React.Component {
+  // Create fields of the form
+  field1 = React.createRef();
+  field2 = React.createRef();
+
+  handleSubmit = () => {
+    // Get data using refs
+    const field1 = this.field1.current.value;
+    const field2 = this.field2.current.value;
+
+    // DO SOMETHING WITH THE DATA
+    // PERHAPS SEND IT TO SERVER
+    // WITH HTTP REQUEST
+  };
+
+  render() {
+    return (
+      <div>
+        <div>
+          <p>Insert field 1: </p>
+          <input type="text" ref={this.field1} placeholder="Field 1" />
+        </div>
+        <div>
+          <p>Insert field 2: </p>
+          <input type="text" ref={this.field2} placeholder="Field 2" />
+        </div>
+        <div>
+          <button onClick={this.handleSubmit}>submit</button>
+        </div>
+      </div>
+    );
+  }
+}
+```
+
+Although it is possible to manage the data directly in the component, it can also be sent to a parent component using a **custom event handler**. Remember that custom event handlers are passed as `props`, and data can be sent by calling the event handler from the child component. Eventually, the data sent is processed by the callback function of the handler.
+
+In the app render method, where the component is included, add a custom event handler
+
+```jsx
+<RefForm onIsData={this.doSomething}>
+```
+
+And include a callback method that processes the data sent from the child
+
+```jsx
+doSomething = (childData) => {
+  const { field1, field2 } = childData;
+
+  // DO SOMETHING WITH THE FIELDS
+  // PERHAPS USING AN API REST
+};
+```
+
+In the submit handler of the form component, send the data to the parent by calling the custom handler (in the `props`)
+
+```jsx
+handleSubmit = () => {
+  // Get values from input using refs
+  const field1 = this.field1.current.value;
+  const field2 = this.field2.current.value;
+  // send data to parent
+  this.props.onIsData({ field1, field2 });
+};
+```
+
+In this way, data is sent as an object, that is then de-structured and processed. The type of inputs managed here are called **Non controlled inputs**.
