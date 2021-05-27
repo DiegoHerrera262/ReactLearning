@@ -1,6 +1,7 @@
 import React from 'react';
 import ImageCard from './components/ImageCard/index';
 import ListSelected from './components/ListSelected/index';
+import Graphics from './components/Graphics/index';
 
 const images = [
   {
@@ -41,6 +42,30 @@ const images = [
   }
 ];
 
+// Data for graphics element
+const imageData = {
+  labels : images.map((image) => (image.author.name)),
+  datasets : [
+    {
+      label : 'Image Views',
+      backgroundColor : 'rqba(75,192,192,1)',
+      data : images.map((image) => (image.views))
+    }
+  ]
+}
+const options = {
+  title : {
+    display : true,
+    test : 'Total image views per Author',
+    fontSize : 30
+  },
+  legend : {
+    display : true,
+    position : 'right'
+  },
+  maintainAspectRatio : false
+}
+
 class App extends React.Component {
   state = {
     selectedImage : images[0]
@@ -55,7 +80,10 @@ class App extends React.Component {
     return(
       <div>
         <div>
-            <ListSelected image={selectedImage}/>
+          <ListSelected image={selectedImage}/>
+        </div>
+        <div>
+          <Graphics data={imageData} options={options}/>
         </div>
         <div>
           {
