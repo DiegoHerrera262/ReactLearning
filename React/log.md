@@ -973,3 +973,38 @@ handleSubmit = () => {
 ```
 
 In this way, data is sent as an object, that is then de-structured and processed. The type of inputs managed here are called **Non controlled inputs**.
+
+## Managing forms
+
+By using the marker `form`, it is possible to avoid explicit declaration of the refs to the input elements, and the necessity of defining a `onClick` event for the submit button. Instead, a `onSubmit` event is defined on the `form` element. The handler of this event receives in the `event` argument, references to the real DOM elements associated to the `input`s in the form. As before, a custom event can be used to pass the entered values to the parent component. An example of the JSX syntax is presented
+
+```jsx
+class NativeForm extends React.Component {
+  handleSubmit = (event) => {
+    // The event contains the refs
+    const field1 = event.target[0].value;
+    const field2 = event.target[1].value;
+    // use parent callback from
+    // custom event to pass data
+    this.props.onIsData({ field1, field2 });
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <div>
+          <input type="text" placeholder="field1" />
+        </div>
+        <div>
+          <input type="text" placeholder="field2" />
+        </div>
+        <div>
+          <button>Submit</button>
+        </div>
+      </form>
+    );
+  }
+}
+```
+
+Although this syntax is fairly simple, the main problem of having non controlled inputs is that there is no way to validate if the data entered by some user is consistent with the expected characteristics, for example, to store on a given database. This is something quite important in most applications. As a result, I will learn how to manage **controlled input forms**.

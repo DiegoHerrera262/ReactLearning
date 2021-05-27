@@ -1,5 +1,6 @@
 import React from 'react';
 import NonControlledInput from './components/NonControlledInput';
+import NonControlledForm from './components/NonControlledForm';
 
 class App extends React.Component {
   // Callback from custom event handler
@@ -18,6 +19,12 @@ class App extends React.Component {
         </div>
         <div>
           <NonControlledInput onEnteredData={this.send}/>
+        </div>
+        <div>
+          <h1>Pure React form</h1>
+        </div>
+        <div>
+          <NonControlledForm onEnteredData={this.send}/>
         </div>
       </div>
     )
