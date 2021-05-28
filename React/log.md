@@ -1008,3 +1008,37 @@ class NativeForm extends React.Component {
 ```
 
 Although this syntax is fairly simple, the main problem of having non controlled inputs is that there is no way to validate if the data entered by some user is consistent with the expected characteristics, for example, to store on a given database. This is something quite important in most applications. As a result, I will learn how to manage **controlled input forms**.
+
+## Managing controlled input forms
+
+To control the format of the input, perhaps with a RegExp, the state of a custom `input` component can be used. The simplest way to start controlling is to use an `onChange` event, that captures the input through the event
+
+```jsx
+class MyControlledInput extends React.Component {
+  state = {
+    text : '',
+    validInput : false
+  }
+  // Add change handler
+  handleChange = (event) => {
+    // get text value
+    const inputText = event.target.value.trim()
+    this.setState(() => ({
+      ...state,
+      text : inputText,
+      validInput : someLogic(inputText)
+    }));
+  }
+  render(){
+    return (
+      <div>
+        <input type='text' onChange={this.handleChange}>
+      </div>
+    );
+  }
+}
+```
+
+In that way, the condition `this.isValid` can be used to change the styling so that user can determine if input is correct or not. To send the data to a parent component, a custom event handler can be used, like on the before cases.
+
+> The difference is that this time, the event trigger should receive two arguments inside the child handler: a property name and the text content. Then, the parent handler can store values on its state with square bracket notation.
