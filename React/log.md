@@ -1042,3 +1042,82 @@ class MyControlledInput extends React.Component {
 In that way, the condition `this.isValid` can be used to change the styling so that user can determine if input is correct or not. To send the data to a parent component, a custom event handler can be used, like on the before cases.
 
 > The difference is that this time, the event trigger should receive two arguments inside the child handler: a property name and the text content. Then, the parent handler can store values on its state with square bracket notation.
+
+**date:** 31/05/21
+**topic** HTTP Requests in React
+
+## HTTP Requests with `componentDidMount`
+
+The class method `componentDidMount` is a _lifecycle method_ that executes asynchronously, and immediately after the component is rendered in the DOM. In some instances, for example creating a panel of available products in some database, it is desirable to load data using an HTTP request. This can be done natively using `fetch` method. If data needs to be loaded immediately after rendering, then fetching can be done inside a `componentDidMount` of a class object.
+
+```jsx
+componentDidMount(){
+  // Some operations to do after
+  // rendering the component
+  fetch('DatabaseUrl').then(rawAnswer => rawAnswer.json()).then((answer) => { /* Do something with the answer */ })
+}
+```
+
+The `fetch` function allows catching an answer from some online service that I might want to integrate in my app. However, the answer then needs to be cleaned up, which is the two `then` methods applied.
+
+> This can be useful for things that require showing some gallery or some data from a third party service right after rendering of the element.
+
+## HTTP Request for searching
+
+Usually, on a search, the user inputs some text which is cross-referenced with some database, and eventually related info is retrieved. This can be done in the shape of a `form`, in case of non controlled input. This time, the `fetch` function is called inside the handler of a _submit event_ COnsider, for instance, a class component named `SearchBar`. This might have a state object that contains relevant data to be displayed after the search is successful.
+
+```jsx
+class SearchBar extends React.Component {
+  state = {
+    data = {}
+  }
+
+  // Here is the event handler
+
+  render(){
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <input type='text'>
+          <button>submit</button>
+        </form>
+
+        {/*Here is the conditional rendering*/}
+
+      </div>
+    );
+  }
+}
+```
+
+By default, if the data to be displayed has some default property initialized, it will display some markup
+
+```jsx
+{data.someProperty && (
+  // Some markup that
+  // displays the info
+  // of interest
+  )
+}
+```
+
+This **conditional rendering** is quite useful to enhance user experience. Once a search key is submitted, a request is sent to the third party service. This usually requires updating the state of the component to store the information. Here it is important to remember that `setState` is an asynchronous method.
+
+```jsx
+handleSubmit = (event) => {
+  event.preventDefault();
+  const searchKey = event.target[0].value.trim();
+  // This is my service api key
+  const url = "http//mydatabase.com/id=apikey";
+  // Some logic is implemented to
+  // transform the search key and
+  // the url into a valid request
+  fetch(apiLogic(url, searchKey))
+    .then((rawAns) => rawAns.json())
+    .then((ans) => this.setState({ someProperty: ans.somProperty }));
+};
+```
+
+In this way, it is possible to display data retrieved from a third party service using a class component.
+
+> In some instances, such as slow internet connection, it is useful to include a state variable that allows conditional rendering of a wait page.
