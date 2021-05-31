@@ -1054,7 +1054,11 @@ The class method `componentDidMount` is a _lifecycle method_ that executes async
 componentDidMount(){
   // Some operations to do after
   // rendering the component
-  fetch('DatabaseUrl').then(rawAnswer => rawAnswer.json()).then((answer) => { /* Do something with the answer */ })
+  fetch('DatabaseUrl')
+  .then(rawAnswer => rawAnswer.json())
+  .then((answer) => {
+    /* Do something with the answer */
+    });
 }
 ```
 
@@ -1121,3 +1125,48 @@ handleSubmit = (event) => {
 In this way, it is possible to display data retrieved from a third party service using a class component.
 
 > In some instances, such as slow internet connection, it is useful to include a state variable that allows conditional rendering of a wait page.
+
+## HTTP Requests with Axios
+
+Old web browsers do not support the `fetch` method. In those cases, a third party library may be used to handle HTTP requests. Here, I illustrate how to use **Axios**. The first step is to install it
+
+```bash
+npm install axios --save
+```
+
+To make a request like `fetch`, the `get` method should be used. In this case, however, the answer need not be parsed. So only one `then` has to be executed.
+
+> The answer has the relevant data on on property named `data`. This is what should be stored on the state of a component for display.
+
+It is advisable to include Axios only if the whole code is necessary, or the apps is used in really old browsers.
+
+**Pro Tip:** Notice that the handling of HTTP requests is always asynchronous. The request is sent, and a _promise_ is received. Once the data is retrieved from the server, a _callback_ is called and data is processed. A very useful tool for making asynchronous code look synchronous is using **Async Await** syntax.
+
+While working with `fetch` or `axios.get`, a `then` method was used to actually get the data (those methods only provided a promise). With Async Await, it is possible to avoid calling `then`, as follows
+
+With `fetch`
+
+```jsx
+const rawAns = await fetch("htttp://myroute/request");
+const ans = await res.json();
+```
+
+With `axios`
+
+```jsx
+const ans = await axios.get("http://myroute/", {
+  params: {
+    someParam: someValue,
+  },
+});
+```
+
+And the event handler must be explicitly declared as an _asynchronous function_
+
+```jsx
+handleEvent = async (event) => {
+  // function logic
+};
+```
+
+Ultimately, the declared constants can be used to set a component's state without explicitly treating `this.setState` as a callback.
